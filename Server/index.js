@@ -3,45 +3,16 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const { User, Admin, Restaurant } = require("./db/index.js");
+const {
+  authenticateJWT_admin,
+  authenticateJWT_user,
+  SECRET,
+  SECRETuser,
+} = require("./middlewear/index.js");
 
 app.use(cors());
 app.use(express.json());
-
-const foodSchema = new mongoose.Schema({
-  foodName: String,
-  description: String,
-  price: Number,
-  imageLink: String,
-});
-
-const userSchema = new mongoose.Schema({
-  firstname: String,
-  lastname: String,
-  username: String,
-  password: String,
-  foodOrdered: [foodSchema],
-});
-
-const adminSchema = new mongoose.Schema({
-  firstname: String,
-  lastname: String,
-  username: String,
-  password: String,
-});
-
-const restroSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  rating: String,
-  offer: String,
-  distance: Number,
-  imageURL: String,
-  foodList: [foodSchema],
-});
-
-const User = mongoose.model("User", userSchema);
-const Admin = mongoose.model("Admin", adminSchema);
-const Restaurant = mongoose.model("Restaurant", restroSchema);
 
 mongoose.connect("mongodb://localhost:27017", {
   useNewUrlParser: true,
@@ -49,46 +20,19 @@ mongoose.connect("mongodb://localhost:27017", {
   dbName: "zomato",
 });
 
-const SECRET = "ZoMaT0";
-const SECRETuser = "zOmAt0";
-
-const authenticateJWT_admin = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1]; //Bearer vcgvHKjcvyBHCBYUIAHAWEBFYUBsehj>kCBALUSWE
-    jwt.verify(token, SECRET, (err, user) => {
-      if (err) {
-        return res.status(403).json({ error: err }); // 403 forbidden
-      }
-      console.log("--> Admin authenticated...");
-      req.user = user;
-      // console.log(req.user);
-      next();
-    });
-  } else {
-    return res.status(401); // 401 Unauthorized response
-  }
-};
-
-const authenticateJWT_user = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, SECRETuser, (err, user) => {
-      if (err) {
-        return res.status(403).json({ error: err });
-      }
-      console.log("--> User authenticated...");
-      req.user = user;
-      // console.log(req.user);
-      next();
-    });
-  } else {
-    return res.status(401);
-  }
-};
-
 // Admin - Routes
+
+app.get("/admin/me", authenticateJWT_admin, async (req, res) => {
+  console.log("me called");
+  const admin = await Admin.findOne({ username: req.user.username });
+  console.log(admin.username);
+  if (admin) {
+    res.json({ username: admin.username });
+  } else {
+    res.status(403).json({ message: "Admin dosent exists" });
+    return;
+  }
+});
 
 app.post("/admin/signup", async (req, res) => {
   const { firstname, lastname, username, password } = req.body;
@@ -221,6 +165,17 @@ app.get("/admin/restro", authenticateJWT_admin, async (req, res) => {
 });
 
 // User - Routes
+
+app.get("/user/me", authenticateJWT_user, async (req, res) => {
+  const user = await User.findOne({ username: req.user.username });
+  console.log(user.username);
+  if (user) {
+    res.json({ username: user.username });
+  } else {
+    res.status(403).json({ message: "User dosent exists" });
+    return;
+  }
+});
 
 app.post("/users/signup", async (req, res) => {
   const { firstname, lastname, username, password } = req.body;
