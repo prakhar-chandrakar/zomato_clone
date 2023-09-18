@@ -12,12 +12,15 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../store/atoms/user";
 
 function Signin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const setUser = useSetRecoilState(userState);
 
   return (
     <>
@@ -115,9 +118,14 @@ function Signin() {
                     );
                   } else {
                     console.log("Response received");
+                    console.log(res);
                     res.json().then((data) => {
                       localStorage.setItem("token", data.token);
                       // console.log("Data received", data);
+                      setUser({
+                        userEmail: email,
+                        isLoading: false,
+                      });
                       setEmail("");
                       setPassword("");
                       navigate("/restaurants");

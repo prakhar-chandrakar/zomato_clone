@@ -11,6 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../store/atoms/user";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -18,6 +20,7 @@ function Signup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const setUser = useSetRecoilState(userState);
 
   return (
     <>
@@ -138,6 +141,10 @@ function Signup() {
                 },
               }).then((res) => {
                 res.json().then((data) => {
+                  setUser({
+                    isLoading: false,
+                    userEmail: email,
+                  });
                   localStorage.setItem("token", data.token);
                   window.location = "/restaurants";
                 });
