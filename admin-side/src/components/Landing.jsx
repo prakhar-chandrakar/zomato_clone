@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import banner from "../Assets/zomato-banner.png";
 import { Button, Grid, Typography } from "@mui/material";
+import SigninButton from "./Auth0_SignInButton";
+import SignupButton from "./Auth0_SignUpButton";
+import LogoutButton from "./Auth0_LogOutButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import SendIcon from "@mui/icons-material/Send";
 
 function Landing() {
   const navigate = useNavigate();
+  const { user, isLoading, error, isAuthenticated } = useAuth0();
+
+  if (isAuthenticated) console.log(user);
   return (
     <>
       <div>
@@ -14,30 +22,36 @@ function Landing() {
             >
               <Typography variant={"h2"}> Zomato Admin</Typography>
               <Typography variant={"h6"}>
-                Get almost almost anything anywhere
+                Get almost, anything, anywhere !
               </Typography>
               <div style={{ display: "flex", marginTop: 20, gap: 10 }}>
+                <div>{!error && !isLoading && <SigninButton />}</div>
                 <div>
-                  <Button
-                    size={"large"}
-                    variant={"contained"}
-                    onClick={() => {
-                      navigate("/signup");
-                    }}
-                  >
-                    SignUp
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    size={"large"}
-                    variant={"contained"}
-                    onClick={() => {
-                      navigate("/signin");
-                    }}
-                  >
-                    SignIn
-                  </Button>
+                  <div>{!error && !isLoading && <SignupButton />}</div>
+                  {!error && isLoading && <Typography>Loading ...</Typography>}
+                  {error && <Typography>Authentication Error </Typography>}
+                  {!error && !isLoading && isAuthenticated && (
+                    <>
+                      <br />
+                      <Typography style={{ padding: 5 }}>
+                        Welcome, {user.name}
+                      </Typography>
+                      <div style={{ display: "flex", gap: 5 }}>
+                        <LogoutButton />
+                        <Button
+                          endIcon={<SendIcon />}
+                          // style={{ border: "1px solid #1976D2" }}
+                          variant="outlined"
+                          onClick={() => {
+                            console.log("clicled");
+                            navigate("/restaurants");
+                          }}
+                        >
+                          Go to the website
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
