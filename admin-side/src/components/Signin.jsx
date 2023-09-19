@@ -102,7 +102,7 @@ function Signin() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={async () => {
-                console.log("button clicked");
+                // console.log("button clicked");
                 fetch("http://localhost:3000/admin/login", {
                   method: "POST",
                   headers: {
@@ -111,14 +111,14 @@ function Signin() {
                     "Content-type": "application/json",
                   },
                 }).then((res) => {
-                  console.log(res.status);
+                  // console.log(res.status);
                   if (res.status === 403) {
                     alert(
                       res.statusText + " -" + " Invalid username or password."
                     );
                   } else {
-                    console.log("Response received");
-                    console.log(res);
+                    // console.log("Response received");
+                    // console.log(res);
                     res.json().then((data) => {
                       localStorage.setItem("token", data.token);
                       // console.log("Data received", data);
@@ -126,8 +126,6 @@ function Signin() {
                         userEmail: email,
                         isLoading: false,
                       });
-                      setEmail("");
-                      setPassword("");
                       navigate("/restaurants");
                     });
                   }
