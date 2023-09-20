@@ -41,7 +41,7 @@ function App() {
 function InitUser() {
   const setUser = useSetRecoilState(userState);
   const init = async () => {
-    console.log("init got called *** ");
+    // console.log("init got called *** ");
     try {
       const response = await axios.get("http://localhost:3000/admin/me", {
         headers: {

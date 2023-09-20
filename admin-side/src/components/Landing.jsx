@@ -6,14 +6,17 @@ import { Button, Grid, Typography } from "@mui/material";
 import LogoutButton from "./Auth0_LogOutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import SendIcon from "@mui/icons-material/Send";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../store/atoms/user";
 // import Signin from "./Signin";
 // import Signup from "./Signup";
 
 function Landing() {
   const navigate = useNavigate();
   const { user, isLoading, error, isAuthenticated } = useAuth0();
+  const setUser = useSetRecoilState(userState);
 
-  if (isAuthenticated) console.log(user);
+  // if (isAuthenticated) console.log(user);
   return (
     <>
       <div>
@@ -66,7 +69,33 @@ function Landing() {
                           endIcon={<SendIcon />}
                           variant="outlined"
                           onClick={() => {
-                            navigate("/restaurants");
+                            const username = user.email;
+                            // console.log(username);
+                            //  axios
+                            //    .post("http://localhost:3000/admin/auth0", {
+                            //      headers: {
+                            //        "username": { username },
+                            //      },
+                            //    })
+                            //    .then((response) => {
+                            //      console.log(response.data);
+                            //      //   navigate("/restaurants");
+                            //    });
+                            fetch("http://localhost:3000/admin/auth0", {
+                              method: "POST",
+                              headers: {
+                                "username": { username },
+                              },
+                            }).then((res) => {
+                              res.json().then((data) => {
+                                localStorage.setItem("token", data.token);
+                                setUser({
+                                  isLoading: false,
+                                  userEmail: username,
+                                });
+                                navigate("/restaurants");
+                              });
+                            });
                           }}
                         >
                           Go to the website

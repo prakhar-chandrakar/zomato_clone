@@ -23,15 +23,30 @@ mongoose.connect("mongodb://localhost:27017", {
 // Admin - Routes
 
 app.get("/admin/me", authenticateJWT_admin, async (req, res) => {
-  console.log("me called");
+  // console.log("me called");
   const admin = await Admin.findOne({ username: req.user.username });
-  console.log(admin.username);
+  // console.log(admin.username);
   if (admin) {
     res.json({ username: admin.username });
   } else {
     res.status(403).json({ message: "Admin dosent exists" });
     return;
   }
+});
+
+app.post("/admin/auth0", async (req, res) => {
+  const username = req.headers.username;
+  const password = "Auth0_authenticated";
+  const obj = { username, password };
+  const newUser = new Admin(obj);
+  newUser.save();
+  // console.log("auth 0 calleed");
+  // console.log(username);
+  const token = jwt.sign({ username, role: "admin" }, SECRET, {
+    expiresIn: "1h",
+  });
+  // console.log(token);
+  res.json({ message: "Admin Logged in via Auth0", token });
 });
 
 app.post("/admin/signup", async (req, res) => {
@@ -102,7 +117,7 @@ app.put(
 app.get("/admin/restro/:restroId", authenticateJWT_admin, async (req, res) => {
   const restaurantId = req.params.restroId;
   const restaurant = await Restaurant.findById(restaurantId);
-  console.log("i was called : menu");
+  // console.log("i was called : menu");
   if (restaurant) {
     res.json({ restaurant });
   } else {
@@ -168,7 +183,7 @@ app.get("/admin/restro", authenticateJWT_admin, async (req, res) => {
 
 app.get("/user/me", authenticateJWT_user, async (req, res) => {
   const user = await User.findOne({ username: req.user.username });
-  console.log(user.username);
+  // console.log(user.username);
   if (user) {
     res.json({ username: user.username });
   } else {
@@ -285,7 +300,7 @@ app.delete(
       const foodIndex = user.foodOrdered.findIndex(
         (item) => item._id.toString() === foodId
       );
-      console.log(`fodindex ${foodIndex}`);
+      // console.log(`fodindex ${foodIndex}`);
       if (foodIndex !== -1) {
         user.foodOrdered.splice(foodIndex, 1);
         await user.save();

@@ -4,17 +4,19 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userState } from "../store/atoms/user";
 import { userEmailState } from "../store/selectors/userEmail";
 import { isUserLoading } from "../store/selectors/isUserLoading";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Appbar() {
   const navigate = useNavigate();
   const userLoading = useRecoilValue(isUserLoading);
   const userEmail = useRecoilValue(userEmailState);
   const setUser = useSetRecoilState(userState);
+  const { logout, isAuthenticated } = useAuth0();
 
   if (userLoading) {
     return <></>;
   }
-  console.log(userEmail);
+  // console.log(userEmail);
   if (userEmail) {
     return (
       <>
@@ -49,13 +51,17 @@ function Appbar() {
               <Button
                 // color="success"
                 variant="contained"
-                onClick={() => {
-                  navigate("/");
+                onClick={async () => {
                   localStorage.setItem("token", null);
                   setUser({
                     isLoading: false,
                     userEmail: null,
                   });
+
+                  if (isAuthenticated) {
+                    logout();
+                  }
+                  navigate("/");
                 }}
               >
                 Logout
