@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import banner from "../Assets/zomato-banner.png";
 import { Button, Grid, Typography } from "@mui/material";
-import SigninButton from "./Auth0_SignInButton";
-import SignupButton from "./Auth0_SignUpButton";
+// import SigninButton from "./Auth0_SignInButton";
+// import SignupButton from "./Auth0_SignUpButton";
 import LogoutButton from "./Auth0_LogOutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import SendIcon from "@mui/icons-material/Send";
+// import Signin from "./Signin";
+// import Signup from "./Signup";
 
 function Landing() {
   const navigate = useNavigate();
@@ -25,9 +27,31 @@ function Landing() {
                 Get almost, anything, anywhere !
               </Typography>
               <div style={{ display: "flex", marginTop: 20, gap: 10 }}>
-                <div>{!error && !isLoading && <SigninButton />}</div>
                 <div>
-                  <div>{!error && !isLoading && <SignupButton />}</div>
+                  {!isAuthenticated && !isLoading && (
+                    <Button
+                      size={"large"}
+                      variant={"contained"}
+                      onClick={() => {
+                        navigate("/signup");
+                      }}
+                    >
+                      SignUp
+                    </Button>
+                  )}
+                </div>
+                <div>
+                  {!isAuthenticated && !isLoading && (
+                    <Button
+                      size={"large"}
+                      variant={"contained"}
+                      onClick={() => {
+                        navigate("/signin");
+                      }}
+                    >
+                      SignIn
+                    </Button>
+                  )}
                   {!error && isLoading && <Typography>Loading ...</Typography>}
                   {error && <Typography>Authentication Error </Typography>}
                   {!error && !isLoading && isAuthenticated && (
@@ -40,10 +64,8 @@ function Landing() {
                         <LogoutButton />
                         <Button
                           endIcon={<SendIcon />}
-                          // style={{ border: "1px solid #1976D2" }}
                           variant="outlined"
                           onClick={() => {
-                            console.log("clicled");
                             navigate("/restaurants");
                           }}
                         >

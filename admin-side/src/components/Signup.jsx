@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  Divider,
   FormControlLabel,
   Grid,
   TextField,
@@ -13,8 +14,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../store/atoms/user";
+import LogoutButton from "./Auth0_LogOutButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Signup() {
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -34,15 +38,17 @@ function Signup() {
       >
         <Card
           variant="outlined"
+          sx={{ maxWidth: 325, minWidth: 200 }}
           style={{
             display: "flex",
             flexDirection: "column",
-            // justifyContent: "center",
             alignContent: "center",
             alignItems: "center",
-            width: 400,
             padding: 10,
-            backgroundColor: "#eeeeee",
+            paddingLeft: 20,
+            paddingRight: 20,
+            borderRadius: 15,
+            backgroundColor: "white",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -59,6 +65,7 @@ function Signup() {
                 name="firstName"
                 required
                 fullWidth
+                size="small"
                 id="firstName"
                 label="First Name"
                 onChange={(e) => {
@@ -70,6 +77,7 @@ function Signup() {
               <TextField
                 autoComplete="given-name"
                 name="lastName"
+                size="small"
                 fullWidth
                 id="lastName"
                 label="Last Name"
@@ -82,6 +90,7 @@ function Signup() {
               <TextField
                 autoComplete="email"
                 name="userEmail"
+                size="small"
                 required
                 fullWidth
                 id="useremail"
@@ -92,8 +101,11 @@ function Signup() {
               />
             </Grid>
             <Grid item xs={12} sm={12} lg={12}>
+              {/* <FormControl sx={{ width: "40ch" }} variant="outlined"> */}
               <TextField
+                htmlFor="outlined-adornment-password"
                 autoComplete="new-password"
+                size="small"
                 name="password"
                 required
                 fullWidth
@@ -104,13 +116,14 @@ function Signup() {
                   setPassword(e.target.value);
                 }}
               />
+              {/* </FormControl> */}
             </Grid>
             <Grid
               item
-              xs={6}
-              sm={6}
-              lg={6}
-              style={{ marginLeft: 5, marginTop: -10, marginBottom: -5 }}
+              xs={12}
+              sm={12}
+              lg={12}
+              style={{ marginLeft: 5, marginTop: -15, marginBottom: -5 }}
             >
               <FormControlLabel
                 control={<Checkbox value="visibility" color="primary" />}
@@ -126,7 +139,7 @@ function Signup() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 1, mb: 1 }}
             onClick={() => {
               fetch("http://localhost:3000/admin/signup", {
                 method: "POST",
@@ -153,8 +166,50 @@ function Signup() {
           >
             Sign Up
           </Button>
+          <Grid container justifyContent={"center"}>
+            <Grid item style={{ marginTop: 10 }}>
+              <Divider style={{ width: 300, marginBottom: 10 }}>OR</Divider>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 20,
+                  marginTop: -10,
+                }}
+              >
+                <LogoutButton />
+                {!isAuthenticated && (
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      loginWithRedirect();
+                    }}
+                  >
+                    <img
+                      src="https://cdn.auth0.com/website/assets/pages/signup/assets/google-avatar-9fb334183c.svg"
+                      alt="Google logo"
+                      style={{ backgroundColor: "transparent" }}
+                    />
+                  </Button>
+                )}
+                {!isAuthenticated && (
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      loginWithRedirect();
+                    }}
+                  >
+                    <img
+                      src="https://cdn.auth0.com/website/assets/pages/signup/assets/github-avatar-a52f5d5824.svg"
+                      alt="Github logo"
+                    />
+                  </Button>
+                )}
+              </div>
+            </Grid>
+          </Grid>
           <Grid container justifyContent={"flex-end"}>
-            <Grid item>
+            <Grid item style={{ margin: 10, marginRight: 0, marginBottom: 0 }}>
               <Link to="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>

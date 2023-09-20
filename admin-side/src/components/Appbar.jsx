@@ -83,7 +83,10 @@ function Appbar() {
           >
             <Typography variant="h5">Zomato</Typography>
           </div>
-          <div style={{ display: "flex", gap: 5, paddingBottom: 4 }}>
+          {/* <div>
+            <Typography variant="h6"> </Typography>
+          </div> */}
+          {/* <div style={{ display: "flex", gap: 5, paddingBottom: 4 }}>
             <div>
               <Button
                 variant={"contained"}
@@ -104,7 +107,7 @@ function Appbar() {
                 SignIn
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </>
     );

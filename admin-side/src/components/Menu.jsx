@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { Card, Grid, TextField, Typography } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button, Card, Grid, TextField, Typography } from "@mui/material";
 
 function RestaurantMenu() {
   const [restaurant, setRestarant] = useState({});
@@ -36,6 +36,7 @@ function RestaurantMenu() {
 }
 
 function BlueHeader(props) {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -48,9 +49,25 @@ function BlueHeader(props) {
         marginBottom: -50,
       }}
     >
+      <Button
+        variant="outlined"
+        style={{
+          z: 1000,
+          color: "black",
+          marginLeft: -15,
+          marginTop: 10,
+          border: "1px solid black",
+        }}
+        onClick={() => {
+          navigate("/restaurants");
+          console.log("hii");
+        }}
+      >
+        Go Back
+      </Button>
       <div
         style={{
-          height: 190,
+          height: 110,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
