@@ -9,6 +9,7 @@ import RestaurantMenu from "./components/Menu";
 import { useEffect } from "react";
 import axios from "axios";
 import { userState } from "./store/atoms/user";
+import AddRestaurant from "./components/AddRstaurant";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path={"/signin"} element={<Signin />} />
               <Route path={"/signup"} element={<Signup />} />
               <Route path={"/restaurants"} element={<RestaurantList />} />
+              <Route path={"/addRestaurant"} element={<AddRestaurant />} />
               <Route path={"/menu/:restroId"} element={<RestaurantMenu />} />
               <Route path={"/"} element={<Landing />} />
             </Routes>
