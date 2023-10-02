@@ -4,6 +4,6 @@ export const restaurantState = atom({
   key: "restaurantState",
   default: {
     isLoadind: true,
-    restaurant: null,
+    restaurant: {},
   },
 });

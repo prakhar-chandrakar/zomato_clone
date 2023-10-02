@@ -5,6 +5,7 @@ const foodSchema = new mongoose.Schema({
   description: String,
   price: Number,
   imageLink: String,
+  type: String,
 });
 
 const userSchema = new mongoose.Schema({

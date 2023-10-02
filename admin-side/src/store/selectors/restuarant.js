@@ -76,6 +76,17 @@ export const restaurantImageURL = selector({
     }
   },
 });
+export const restaurantDistance = selector({
+  key: "restaurantDistance",
+  get: ({ get }) => {
+    const state = get(restaurantState);
+    if (state.restaurant && state.restaurant.distance) {
+      return state.restaurant.distance;
+    } else {
+      return "";
+    }
+  },
+});
 
 export const restaurantFoodList = selector({
   key: "restaurantFoodList",
