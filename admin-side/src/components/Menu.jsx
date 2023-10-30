@@ -25,7 +25,7 @@ function RestaurantMenu() {
       <BlueHeader restaurant={restaurant} />
       <Grid container>
         <Grid item sm={12} md={12} lg={7}>
-          <UpdateCard restaurant={restaurant} />
+          <FoodItem restaurant={restaurant} />
         </Grid>
         <Grid item sm={12} md={12} lg={5}>
           <RestuarantCard restaurant={restaurant} />
@@ -96,16 +96,18 @@ function RestuarantCard(props) {
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "100%",
+        width: "80%",
+        marginLeft: "5.5vw",
         alignItems: "center",
+        // backgroundColor: "white",
       }}
     >
       <div
-        style={{
-          padding: 10,
-          marginRight: 10,
-          marginLeft: 10,
-        }}
+      // style={{
+      //   padding: 10,
+      //   marginRight: 10,
+      //   marginLeft: 10,
+      // }}
       >
         <Card
           style={{
@@ -174,7 +176,18 @@ function RestuarantCard(props) {
               {props.restaurant.rating}⭐
             </Typography>
           </div>
-          <hr style={{ width: "100%", borderTop: "1px solid black" }} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              color: "purple",
+            }}
+          >
+            <Button variant="contained" size={"large"} color="success">
+              Update
+            </Button>
+          </div>
+          {/* <hr style={{ width: "100%", borderTop: "1px solid black" }} />
           <div>
             <Typography variant="h5" align="center">
               <b>Restaurant Menu</b>
@@ -189,7 +202,7 @@ function RestuarantCard(props) {
                 )}
               </div>
             </Typography>
-          </div>
+          </div> */}
         </Card>
       </div>
     </div>
@@ -222,18 +235,57 @@ function FoodCard(props) {
   );
 }
 
-function UpdateCard(props) {
+function FoodItem(props) {
+  const [updateMenu, SetUpdateMenu] = useState(false);
   return (
     <div
       style={{
-        marginTop: 70,
+        marginLeft: "2vw",
+        marginTop: "12vh",
         display: "flex",
         flexDirection: "column",
-        width: "100%",
+        width: "60vw",
         alignItems: "center",
-        // backgroundColor: "white",
+        backgroundColor: "#531AAA", //rgba(255, 255, 255, 0.2)
+        borderRadius: "5px",
       }}
     >
+      <div>
+        {props.restaurant.foodList ? (
+          props.restaurant.foodList.map((food, index) => {
+            return (
+              <UpdateFoodCard
+                food={food}
+                index={index}
+                key={index}
+                updateMenu={updateMenu}
+              />
+            );
+          })
+        ) : (
+          <p>No food items available.</p>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            color: "red",
+            marginTop: "-5px",
+            marginRight: "20px",
+            marginBottom: "10px",
+          }}
+        >
+          <Button
+            variant="contained"
+            size={"large"}
+            style={{ backgroundColor: "yellow", color: "black" }}
+          >
+            Update
+          </Button>
+        </div>
+      </div>
+
+      {/* 
       <Card
         varint={"outlined"}
         style={{
@@ -303,7 +355,7 @@ function UpdateCard(props) {
             <p>No food items available.</p>
           )}
         </div>
-      </Card>
+      </Card> */}
     </div>
   );
 }
@@ -312,41 +364,73 @@ function UpdateFoodCard(props) {
   return (
     <div
       style={{
+        margin: "20px",
         display: "flex",
         flexDirection: "column",
         gap: 15,
+        width: "55vw",
+        // padding: "10px"
       }}
     >
-      <Typography align="right">Food Item : {props.index + 1}</Typography>
-      <TextField
-        InputLabelProps={{ shrink: true }}
-        fullWidth={true}
-        label="Food Item Name"
-        variant="outlined"
-        value={props.food.foodName}
-      ></TextField>
-      <TextField
-        InputLabelProps={{ shrink: true }}
-        fullWidth={true}
-        label="About Food"
-        variant="outlined"
-        value={props.food.description}
-      ></TextField>
-      <TextField
-        InputLabelProps={{ shrink: true }}
-        fullWidth={true}
-        label="Price"
-        variant="outlined"
-        value={props.food.price}
-      ></TextField>
-      <TextField
-        InputLabelProps={{ shrink: true }}
-        fullWidth={true}
-        label="Image Link"
-        variant="outlined"
-        value={props.food.imageLink}
-        style={{ marginBottom: 15 }}
-      ></TextField>
+      <Card variant="outlined">
+        <div style={{ display: "flex", padding: "10px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              style={{
+                width: "250px",
+                height: "200px",
+                border: "1px solid black",
+              }}
+            ></div>
+            {/* <div
+              style={{
+                display: "flex",
+                // justifyContent: "",
+                color: "purple",
+              }}
+            >
+              <Button variant="contained">UPDATE</Button>
+            </div> */}
+          </div>
+          <div style={{ marginLeft: "30px" }}>
+            <TextField
+              // aria-disabled={true}
+              fullWidth={true}
+              label="Food Item Name"
+              variant="standard"
+              value={props.food.foodName}
+              style={{ marginBottom: 15 }}
+            ></TextField>
+            <TextField
+              fullWidth={true}
+              label="About Food"
+              variant="standard"
+              value={props.food.description}
+              style={{ marginBottom: 15 }}
+            ></TextField>
+            <TextField
+              fullWidth={true}
+              label="Image Link"
+              variant="standard"
+              value={props.food.imageLink}
+              style={{ marginBottom: 15 }}
+            ></TextField>
+            <TextField
+              fullWidth={true}
+              label="Price"
+              variant="standard"
+              value={props.food.price}
+              // style={{ marginBottom: 15 }}
+            ></TextField>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }
