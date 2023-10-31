@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  Grid,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -29,8 +30,26 @@ function AddRestaurant() {
 
   return (
     <div>
-      <BlueHeader />
-      <AddCard UpdateRestaurant={UpdateRestaurant} />
+      {/* <BlueHeader /> */}
+      <AboutRestaurant />
+      {/* <AddCard UpdateRestaurant={UpdateRestaurant} /> */}
+    </div>
+  );
+}
+
+function AboutRestaurant() {
+  return (
+    <div>
+      <Grid container justifyContent={"center"}>
+        <Grid item sm={12} md={12} lg={3}>
+          <div style={{ height: "10vh", backgroundColor: "wheat" }}>
+            <Typography> hi there</Typography>
+          </div>
+        </Grid>
+        <Grid item sm={12} md={12} lg={6.5}>
+          <div style={{ height: "10vh", backgroundColor: "pink" }}></div>
+        </Grid>
+      </Grid>
     </div>
   );
 }
@@ -44,7 +63,6 @@ function BlueHeader() {
           height: 180,
           backgroundColor: "#068FFF",
           top: 0,
-          paddingLeft: "2vw",
           zIndex: 0,
           marginBottom: -40,
         }}

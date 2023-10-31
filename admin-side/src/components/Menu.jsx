@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, Grid, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  FormControl,
+  Grid,
+  Input,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 function RestaurantMenu() {
   const [restaurant, setRestarant] = useState({});
@@ -97,9 +106,9 @@ function RestuarantCard(props) {
         display: "flex",
         flexDirection: "column",
         width: "80%",
+        marginTop: "1vh",
         marginLeft: "5.5vw",
         alignItems: "center",
-        // backgroundColor: "white",
       }}
     >
       <div
@@ -121,6 +130,7 @@ function RestuarantCard(props) {
             display: "flex",
             flexDirection: "column",
             gap: "2px",
+            // backgroundColor: "yellow",
           }}
         >
           <img
@@ -140,41 +150,132 @@ function RestuarantCard(props) {
             </Typography>
           </div>
           <hr style={{ width: "100%", borderTop: "1px solid black" }} />
-          <div>
-            <Typography variant="h6">
-              <b>Restaurant Name :</b> {props.restaurant.title}
-            </Typography>
-          </div>
-          <div>
-            <Typography
-              variant="h6"
-              style={{
-                display: "flex",
-                gap: 10,
-              }}
-            >
-              <div>
-                <b>Description: </b>
-              </div>
-              <div>{props.restaurant.description}</div>
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="h6">
-              <b>Offer : </b> {props.restaurant.offer}
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="h6">
-              <b>Distance : </b>
-              {props.restaurant.distance} Km
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="h6">
-              <b>Rating : </b>
-              {props.restaurant.rating}⭐
-            </Typography>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+              marginLeft: "19px",
+            }}
+          >
+            <div>
+              <Typography variant="h6">
+                <b> Restaurant Name : </b>
+                <FormControl
+                  style={{
+                    marginLeft: "7px",
+                    marginTop: "-2px",
+                    width: "20ch",
+                  }}
+                  variant="standard"
+                >
+                  <Input
+                    style={{
+                      marginLeft: "7px",
+                      marginTop: "-2px",
+                      fontSize: "20px",
+                    }}
+                    value={props.restaurant.title}
+                  />
+                </FormControl>
+              </Typography>
+            </div>
+            <div>
+              <Typography
+                variant="h6"
+                style={{
+                  display: "flex",
+                  gap: 10,
+                }}
+              >
+                <div>
+                  <b>Description: </b>
+                </div>
+                <div>
+                  <FormControl
+                    fullWidth
+                    style={{
+                      marginLeft: "7px",
+                      marginTop: "-2px",
+                      width: "25ch",
+                    }}
+                    variant="standard"
+                  >
+                    <Input
+                      multiline={true}
+                      style={{ fontSize: "20px" }}
+                      value={props.restaurant.description}
+                    />
+                  </FormControl>
+                </div>
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="h6">
+                <b>Offer : </b>
+                <FormControl
+                  fullWidth
+                  style={{
+                    marginLeft: "7px",
+                    marginTop: "-2px",
+                    width: "30ch",
+                  }}
+                  variant="standard"
+                >
+                  <Input
+                    multiline={true}
+                    style={{ fontSize: "20px" }}
+                    value={props.restaurant.offer}
+                  />
+                </FormControl>
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="h6">
+                <b>Distance : </b>
+                <FormControl
+                  fullWidth
+                  style={{
+                    marginLeft: "7px",
+                    marginTop: "-2px",
+                    width: "7ch",
+                  }}
+                  variant="standard"
+                >
+                  <Input
+                    multiline={true}
+                    style={{ fontSize: "20px" }}
+                    value={props.restaurant.distance}
+                    endAdornment={
+                      <InputAdornment position="end">Km.</InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="h6">
+                <b>Rating : </b>
+                <FormControl
+                  fullWidth
+                  style={{
+                    marginLeft: "7px",
+                    marginTop: "-2px",
+                    width: "9ch",
+                  }}
+                  variant="standard"
+                >
+                  <Input
+                    multiline={true}
+                    style={{ fontSize: "20px" }}
+                    value={props.restaurant.rating}
+                    endAdornment={
+                      <InputAdornment position="end">/ 5⭐</InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Typography>
+            </div>
           </div>
           <div
             style={{
@@ -240,8 +341,8 @@ function FoodItem(props) {
   return (
     <div
       style={{
-        marginLeft: "2vw",
-        marginTop: "12vh",
+        marginLeft: "1.6vw",
+        marginTop: "11vh",
         display: "flex",
         flexDirection: "column",
         width: "60vw",
@@ -426,6 +527,11 @@ function UpdateFoodCard(props) {
               label="Price"
               variant="standard"
               value={props.food.price}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">Rs.</InputAdornment>
+                ),
+              }}
               // style={{ marginBottom: 15 }}
             ></TextField>
           </div>
