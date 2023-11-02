@@ -31,13 +31,25 @@ function AddRestaurant() {
   return (
     <div>
       {/* <BlueHeader /> */}
-      <Grid container justifyContent={"center"}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginLeft: "30vw",
+        }}
+      >
+        <Typography style={{ color: "white", fontSize: "70px" }}>
+          Add New Restaurant
+        </Typography>
+      </div>
+      <Grid container justifyContent={"center"} style={{ borderRadius: "5px" }}>
         <Grid item sm={12} md={12} lg={3}>
           <div
             style={{
               height: "100vh",
               backgroundColor: "wheat",
               border: "1px solid black",
+              borderRadius: "5px",
             }}
           >
             <Card
@@ -88,6 +100,7 @@ function AddRestaurant() {
               height: "10vh",
               backgroundColor: "pink",
               border: "1px solid black",
+              borderRadius: "5px",
             }}
           >
             <AddCard UpdateRestaurant={UpdateRestaurant} />
@@ -381,6 +394,89 @@ function AddCard({ UpdateRestaurant }) {
               }}
             />
           </div>
+        </Card>
+        <Card
+          variant="outlined"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            padding: 10,
+            backgroundColor: "pink",
+          }}
+        >
+          <div style={{ display: "flex", gap: 13 }}>
+            <TextField
+              required={true}
+              label="Food Name"
+              size="small"
+              style={{ width: 442 }}
+              onChange={(e) => {
+                UpdateFoodItem("foodName", e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              required={true}
+              label="Description"
+              size="small"
+              style={{
+                width: 442,
+                backgroundColor: "white",
+                border: "2px solid black",
+                borderRadius: "5px",
+                marginLeft: "10px",
+              }}
+              variant="standard"
+              onChange={(e) => {
+                UpdateFoodItem("description", e.target.value);
+              }}
+            ></TextField>
+          </div>
+          <div style={{ display: "flex", gap: 13 }}>
+            <TextField
+              label="Image URL"
+              size="small"
+              variant="filled"
+              required={true}
+              style={{
+                width: 290,
+                backgroundColor: "white",
+                border: "2px solid black",
+                borderRadius: "5px",
+              }}
+              onChange={(e) => {
+                UpdateFoodItem("imageLink", e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              required={true}
+              label="Price"
+              size="small"
+              style={{ width: 290 }}
+              onChange={(e) => {
+                UpdateFoodItem("price", e.target.value);
+              }}
+            ></TextField>
+            <ToggleButtonGroup
+              color="primary"
+              value={type}
+              onChange={(e) => {
+                handleTypeChange(e.target.value);
+              }}
+              exclusive
+              required={true}
+              aria-label="Platform"
+              size="small"
+            >
+              <ToggleButton value="veg">&nbsp; Veg &nbsp;</ToggleButton>
+              <ToggleButton value="nonVeg">Non-Veg</ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+
+          <Button variant={"outlined"} onClick={handleAddFoodItem}>
+            Add Food Item
+          </Button>
+          <Button variant="contained">Add Restuarant</Button>
         </Card>
         <Typography
           align="center"
