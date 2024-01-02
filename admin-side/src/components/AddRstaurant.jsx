@@ -440,7 +440,8 @@ function AddCard({ UpdateRestaurant }) {
               required={true}
               style={{
                 width: 290,
-                backgroundColor: "white",
+                backgroundColor: "#FFFFFF",
+                opacity: 1,
                 border: "2px solid black",
                 borderRadius: "5px",
               }}
@@ -448,6 +449,7 @@ function AddCard({ UpdateRestaurant }) {
                 UpdateFoodItem("imageLink", e.target.value);
               }}
             ></TextField>
+
             <TextField
               required={true}
               label="Price"
@@ -478,7 +480,7 @@ function AddCard({ UpdateRestaurant }) {
           </Button>
           <Button variant="contained">Add Restuarant</Button>
         </Card>
-        <Typography
+        {/* <Typography
           align="center"
           variant="h4"
           style={{
@@ -488,8 +490,8 @@ function AddCard({ UpdateRestaurant }) {
           }}
         >
           Restauranat Details
-        </Typography>
-        <TextField
+        </Typography> */}
+        {/* <TextField
           // label="Restaurant Name"
           size="small"
           focused
@@ -539,10 +541,10 @@ function AddCard({ UpdateRestaurant }) {
               UpdateRestaurant("distance", e.target.value);
             }}
           ></TextField>
-        </div>
-        <Typography>
+        </div> */}
+        {/* <Typography>
           address (pincode, addlin1 state district,) phone number{" "}
-        </Typography>
+        </Typography> */}
         <hr style={{ width: "100%" }}></hr>
         <Typography
           align="center"
