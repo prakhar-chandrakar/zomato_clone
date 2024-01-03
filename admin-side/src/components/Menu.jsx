@@ -487,17 +487,9 @@ function UpdateFoodCard(props) {
                 width: "250px",
                 height: "200px",
                 border: "1px solid black",
+                borderRadius: "4px",
               }}
             ></div>
-            {/* <div
-              style={{
-                display: "flex",
-                // justifyContent: "",
-                color: "purple",
-              }}
-            >
-              <Button variant="contained">UPDATE</Button>
-            </div> */}
           </div>
           <div style={{ marginLeft: "30px" }}>
             <TextField

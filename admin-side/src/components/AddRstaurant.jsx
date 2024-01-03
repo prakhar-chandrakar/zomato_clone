@@ -2,10 +2,12 @@ import {
   Button,
   Card,
   Grid,
+  IconButton,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  backdropClasses,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
@@ -30,7 +32,6 @@ function AddRestaurant() {
 
   return (
     <div>
-      {/* <BlueHeader /> */}
       <div
         style={{
           display: "flex",
@@ -190,6 +191,8 @@ function AddCard({ UpdateRestaurant }) {
           flexDirection: "column",
           backgroundColor: "pink",
           // alignItems: "center",
+          // border: "5px solid black",
+          // borderRadius: "7px",
         }}
       >
         <Card
@@ -402,31 +405,36 @@ function AddCard({ UpdateRestaurant }) {
             flexDirection: "column",
             gap: 10,
             padding: 10,
+            paddingTop: 20,
+            paddingBottom: 20,
             backgroundColor: "pink",
           }}
         >
           <div style={{ display: "flex", gap: 13 }}>
             <TextField
-              required={true}
               label="Food Name"
               size="small"
-              style={{ width: 442 }}
+              variant="filled"
+              required={true}
+              style={{
+                width: 442,
+                border: "1px solid black",
+                borderRadius: "5px",
+              }}
               onChange={(e) => {
                 UpdateFoodItem("foodName", e.target.value);
               }}
             ></TextField>
             <TextField
-              required={true}
               label="Description"
               size="small"
+              variant="filled"
+              required={true}
               style={{
                 width: 442,
-                backgroundColor: "white",
-                border: "2px solid black",
+                border: "1px solid black",
                 borderRadius: "5px",
-                marginLeft: "10px",
               }}
-              variant="standard"
               onChange={(e) => {
                 UpdateFoodItem("description", e.target.value);
               }}
@@ -440,9 +448,7 @@ function AddCard({ UpdateRestaurant }) {
               required={true}
               style={{
                 width: 290,
-                backgroundColor: "#FFFFFF",
-                opacity: 1,
-                border: "2px solid black",
+                border: "1px solid black",
                 borderRadius: "5px",
               }}
               onChange={(e) => {
@@ -451,10 +457,15 @@ function AddCard({ UpdateRestaurant }) {
             ></TextField>
 
             <TextField
-              required={true}
               label="Price"
               size="small"
-              style={{ width: 290 }}
+              variant="filled"
+              required={true}
+              style={{
+                width: 290,
+                border: "1px solid black",
+                borderRadius: "5px",
+              }}
               onChange={(e) => {
                 UpdateFoodItem("price", e.target.value);
               }}
@@ -469,100 +480,59 @@ function AddCard({ UpdateRestaurant }) {
               required={true}
               aria-label="Platform"
               size="small"
+              style={{ border: "1px solid black", borderRadius: "5px" }}
             >
               <ToggleButton value="veg">&nbsp; Veg &nbsp;</ToggleButton>
               <ToggleButton value="nonVeg">Non-Veg</ToggleButton>
             </ToggleButtonGroup>
           </div>
 
-          <Button variant={"outlined"} onClick={handleAddFoodItem}>
-            Add Food Item
-          </Button>
-          <Button variant="contained">Add Restuarant</Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: 10,
+            }}
+          >
+            <Button
+              style={{ width: "130px" }}
+              variant="contained"
+              onClick={handleAddFoodItem}
+            >
+              Add Food
+            </Button>
+          </div>
         </Card>
-        {/* <Typography
-          align="center"
-          variant="h4"
-          style={{
-            fontWeight: 400,
-            color: "black",
-            fontFamily: "Times New Roman, sans-serif",
-          }}
-        >
-          Restauranat Details
-        </Typography> */}
-        {/* <TextField
-          // label="Restaurant Name"
-          size="small"
-          focused
-          onChange={(e) => {
-            UpdateRestaurant("title", e.target.value);
-          }}
-        ></TextField>
-        <TextField
-          // label="Description"
-          size="small"
-          onChange={(e) => {
-            UpdateRestaurant("description", e.target.value);
-          }}
-        ></TextField>
-        <div style={{ display: "flex", gap: 14 }}>
-          <TextField
-            label="Offer"
-            size="small"
-            style={{ width: 442 }}
-            onChange={(e) => {
-              UpdateRestaurant("offer", e.target.value);
-            }}
-          ></TextField>
-          <TextField
-            label="Rating"
-            size="small"
-            style={{ width: 442 }}
-            onChange={(e) => {
-              UpdateRestaurant("rating", e.target.value);
-            }}
-          ></TextField>
-        </div>
-        <div style={{ display: "flex", gap: 14 }}>
-          <TextField
-            label="Restuarant Image"
-            size="small"
-            style={{ width: 442 }}
-            onChange={(e) => {
-              UpdateRestaurant("imageURL", e.target.value);
-            }}
-          ></TextField>
-          <TextField
-            label="Distance"
-            size="small"
-            style={{ width: 442 }}
-            onChange={(e) => {
-              UpdateRestaurant("distance", e.target.value);
-            }}
-          ></TextField>
-        </div> */}
-        {/* <Typography>
-          address (pincode, addlin1 state district,) phone number{" "}
-        </Typography> */}
-        <hr style={{ width: "100%" }}></hr>
-        <Typography
-          align="center"
-          variant="h4"
-          style={{
-            fontWeight: 400,
-            color: "black",
-            fontFamily: "Times New Roman, sans-serif",
-          }}
-        >
-          Menu
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginLeft: "10vw",
+          paddingTop: 50,
+        }}
+      >
+        <Typography style={{ color: "white", fontSize: "70px" }}>
+          Restaurant Menu
         </Typography>
-        <hr style={{ width: "100%" }}></hr>
+      </div>
+
+      <div
+        style={{
+          marginLeft: "-25vw",
+          backgroundColor: "white",
+          borderRadius: "5px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 15,
+          backgroundColor: "#531AAA",
+          alignItems: "center",
+        }}
+      >
         {foodList.map((food, index) => {
-          console.log("hii");
           return <FoodCard food={food} key={index} />;
         })}
-        <Typography
+        {/* <Typography
           align="center"
           variant="h6"
           style={{
@@ -631,7 +601,7 @@ function AddCard({ UpdateRestaurant }) {
 
         <Button variant={"outlined"} onClick={handleAddFoodItem}>
           Add Food Item
-        </Button>
+        </Button> */}
         <Button variant="contained">Add Restuarant</Button>
       </div>
     </>
@@ -642,21 +612,14 @@ function FoodCard(props) {
   const { food } = props;
   return (
     <>
-      <div
-        style={{
-          marginTop: 10,
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
+      <div style={{ display: "flex" }}>
         <Typography align="right">Food Item : {food.id}</Typography>
-
         <Button style={{ margin: 0, padding: 0, marginLeft: -15 }}>
           <DeleteIcon />
         </Button>
       </div>
 
-      <div style={{ display: "flex", gap: 13 }}>
+      <div style={{ display: "flex", backgroundColor: "white" }}>
         <TextField
           InputLabelProps={{ shrink: true }}
           label="Food Name"
@@ -671,33 +634,33 @@ function FoodCard(props) {
           value={food.description}
           style={{ width: 442 }}
         ></TextField>
-      </div>
-      <div style={{ display: "flex", gap: 13 }}>
-        <TextField
-          InputLabelProps={{ shrink: true }}
-          label="Image URL"
-          size="small"
-          value={food.imageLink}
-          style={{ width: 442 }}
-        ></TextField>
-        <TextField
-          InputLabelProps={{ shrink: true }}
-          label="Price"
-          size="small"
-          value={food.price}
-          style={{ width: 300 }}
-        ></TextField>
-        <ToggleButtonGroup
-          InputLabelProps={{ shrink: true }}
-          color="primary"
-          value={food.type}
-          exclusive
-          aria-label="Platform"
-          size="small"
-        >
-          <ToggleButton value="veg">&nbsp; Veg &nbsp;</ToggleButton>
-          <ToggleButton value="nonVeg">Non-Veg</ToggleButton>
-        </ToggleButtonGroup>
+        <div style={{ display: "flex", gap: 13 }}>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            label="Image URL"
+            size="small"
+            value={food.imageLink}
+            style={{ width: 442 }}
+          ></TextField>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            label="Price"
+            size="small"
+            value={food.price}
+            style={{ width: 300 }}
+          ></TextField>
+          <ToggleButtonGroup
+            InputLabelProps={{ shrink: true }}
+            color="primary"
+            value={food.type}
+            exclusive
+            aria-label="Platform"
+            size="small"
+          >
+            <ToggleButton value="veg">&nbsp; Veg &nbsp;</ToggleButton>
+            <ToggleButton value="nonVeg">Non-Veg</ToggleButton>
+          </ToggleButtonGroup>
+        </div>
       </div>
     </>
   );
